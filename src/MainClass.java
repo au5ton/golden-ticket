@@ -1,24 +1,85 @@
+import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.PrintWriter;
-import javax.swing.JOptionPane;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import javax.swing.*;
 
 public class MainClass
 {
+    public static String message = "";
+    public static String program;
+    public static boolean flag = false;
+    public static File f;
+    public static JFileChooser fc = new JFileChooser();
+
     public static void main(String[] args)
     {
         for(;;)
         {
-            String command = JOptionPane.showInputDialog("Command:");
-
-            if(command.startsWith("##"))
+            while(!flag)
             {
-                System.exit(0);
+                program = JOptionPane.showInputDialog(null,"Enter the path to what program to run:","C:\\Windows\\System32\\cmd.exe");
+                f = new File(program);
+                if(f.exists())
+                {
+                    if(f.canExecute())
+                    {
+                        message += "Java says you CAN execute that file. Good.";
+                    }
+                    else
+                    {
+                        message += "Java says you can't execute that file, but hey, let's try anyway.\n";
+                    }
+                    if(f.canRead())
+                    {
+                        message += "Java says you CAN read that file. Good.";
+                    }
+                    else
+                    {
+                        message += "Java says you can't read this file, but hey, let's try anyway.\n";
+                    }
+                    message += ("The program you are trying to run:\n"+f.getAbsolutePath());
+                    flag = true;
+                }
+                else if(program.startsWith("###"))
+                {
+                    System.exit(0);
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null,"According to Java, that file doesn't exist! Please try again.");
+                }
+            }
+            List<String> list = new ArrayList<String>();
+
+            JOptionPane.showMessageDialog(null,"Here's what I know:\n"+message,"golden ticket",JOptionPane.INFORMATION_MESSAGE);
+
+            for(;;)
+            {
+                String s = JOptionPane.showInputDialog(null,"Enter your next argument (type \"###\" to stop):","");
+                if(s.startsWith("###"))
+                {
+                    break;
+                }
+                else
+                {
+                    list.add(s);
+                }
+            }
+
+            String[] baton = new String[list.size()+1];
+            baton[0] = program;
+            for(int i = 0; i < list.size(); i++)
+            {
+                baton[i+1] = list.get(i);
             }
 
             Process p = null;
             try {
-                p = Runtime.getRuntime().exec(command.split(" "));
+                p = Runtime.getRuntime().exec(baton);
             } catch (IOException e) {
                 e.printStackTrace();
                 StringWriter sw = new StringWriter();
