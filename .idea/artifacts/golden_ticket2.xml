@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="golden-ticket2">
+    <output-path>$USER_HOME$/Desktop/</output-path>
+    <root id="archive" name="golden-ticket2.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" />
+      </element>
+    </root>
+  </artifact>
+</component>
