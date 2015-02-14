@@ -7,21 +7,12 @@ import java.nio.file.Files;
 
 import org.apache.commons.io.FileUtils;
 
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
-import javafx.stage.Stage;
-
-
-public class GoldenTicket extends Application {
+public class Resources 
+{
+	private static String t = GoldenTicket.t;
+	private static String tl = GoldenTicket.tl;
 	
-	static String t = "\u2514\u2500\u2500";
-	static String tl = "\u2514\u2500\u2500\u2500\u2500";
-	static String tempDir = System.getProperty("user.home")+"/Desktop/net.austinj.goldenticket/";
-	
-	static String[] assets = {
+	private static String[] assets = {
 		"html/index.html",
 		"html/css/font-awesome.min.css",
 		"html/fonts/fontawesome-webfont.eot",
@@ -33,22 +24,15 @@ public class GoldenTicket extends Application {
 		"html/js/jquery-2.1.3.min.js"
 	};
 	
-	@Override public void start(Stage stage) {
-		
-		WebView browser = new WebView();
-		WebEngine webEngine = browser.getEngine();
-		webEngine.load("http://google.com/");
-		
-		StackPane root = new StackPane();
-		Scene scene = new Scene(root,270,480);
-		
-		root.getChildren().add(browser);
-		
-		stage.setTitle("golden-ticket");
-		stage.setScene(scene);
-		stage.show();
+	private static String tempDir = System.getProperty("user.home")+"/Desktop/net.austinj.goldenticket/";
+	
+	public static String getTempDir()
+	{
+		return tempDir;
 	}
-	public static void main(String[] args){
+	
+	public static void wrangleResources()
+	{
 		
 		System.out.println("Preparing extraction...");
 		File dir = new File(tempDir);
@@ -112,22 +96,8 @@ public class GoldenTicket extends Application {
 		
 		System.out.println("Done.");
 		System.out.println("Extraction complete.");
-		
-		launch(args);
-		
-		safelyExit();
-	}
-	
-	public static void safelyExit(){
-		
-		try {
-			FileUtils.deleteDirectory(new File(tempDir));
-		} catch (IOException e) {
-			e.printStackTrace(System.out);
-		}
-		
-		System.exit(0);
+
 		
 	}
-	
+
 }

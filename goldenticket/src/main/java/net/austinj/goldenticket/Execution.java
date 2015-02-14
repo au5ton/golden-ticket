@@ -1,3 +1,5 @@
+package net.austinj.goldenticket;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
@@ -7,7 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import javax.swing.*;
 
-public class MainClass
+public class Execution
 {
     public static String message = "";
     public static String program;
@@ -15,7 +17,7 @@ public class MainClass
     public static File f;
     public static JFileChooser fc = new JFileChooser();
 
-    public static void main(String[] args)
+    public static void doTheThing(String program, String arguments)
     {
         for(;;)
         {

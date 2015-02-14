@@ -5,13 +5,6 @@
         <title>golden-ticket</title>
         <link href="css/font-awesome.min.css" rel="stylesheet">
         <script src="js/jquery-2.1.3.min.js"></script>
-        <script>
-            
-            function submit(){
-                alert("Stuff and things");
-            }
-        
-        </script>
         <style>
             
             body {
@@ -24,11 +17,13 @@
                 right: 0;
                 margin: 0;
                 padding: 0;
+                overflow-x: hidden;
+                overflow-y: hidden;
+                background: #777;
             }
             
             .container {
-                width: 270px; /*iPhone 6 Plus dimensions*/
-                height: 480px;
+                width: 100%; /*iPhone 6 Plus dimensions*/
                 background: #777;
                 
                 font-family: "Helvetica Neue", "Segoe UI", sans-serif;
@@ -94,17 +89,21 @@
             input[name="filepath"]{
                 
             }
+/*
             input[name="filepath"]:focus{
                 border-bottom: 2px solid #1cd463;
             }
             
+*/
             input[name="arguments"]{
                 margin-bottom: 20px;
                 
             }
+/*
             input[name="arguments"]:focus{
                 border-bottom: 2px solid #d42a1c;
             }
+*/
             
             .good-input {
                 border-bottom: 2px solid #1cd463;
@@ -156,18 +155,33 @@
             
             <p class="field-title">Program file path</p>
             <div>
-                <input type="text" name="filepath">
+                <input type="text" name="filepath" id="filepath" onchange="filePathChanged()" onkeyup="filePathChanged()" onkeypress="filePathChanged()" onkeydown="filePathChanged()" onpaste="filePathChanged()" oncut="filePathChanged()">
             </div>
             <p class="field-title">Program arguments (separated by | )</p>
             <div>
-                <input type="text" name="arguments">
+                <input type="text" name="arguments" id="arguments">
             </div>
             
-            <div class="button noselect" onclick="javascript:submit()">
+            <div class="button noselect" onclick="java.submit(document.getElementById('filepath').value, document.getElementById('arguments').value)">
                 LET'S GO
             </div>
             
         </div>
 
+        <script>
+            
+            function filePathChanged(){
+                var b = java.checkFile(document.getElementById("filepath").value);
+                if(b === true){
+                    $("input[name='filepath']").attr("style","border-bottom: 2px solid #1cd463;");
+                }
+                else if(b === false){
+                    $("input[name='filepath']").attr("style","border-bottom: 2px solid #d42a1c;");
+                }
+                    
+            }
+        
+        </script>
+        
     </body>
 </html>
